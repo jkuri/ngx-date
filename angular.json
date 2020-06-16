@@ -28,7 +28,7 @@
               "projects/app/src/assets"
             ],
             "styles": [
-              "projects/app/src/styles.sass"
+              "projects/app/src/app/styles/app.sass"
             ],
             "scripts": []
           },
@@ -92,7 +92,7 @@
               "projects/app/src/assets"
             ],
             "styles": [
-              "projects/app/src/styles.sass"
+              "projects/app/src/app/styles/app.sass"
             ],
             "scripts": []
           }
@@ -163,6 +163,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "app"
 }

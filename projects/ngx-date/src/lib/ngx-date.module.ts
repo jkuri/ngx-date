@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { NgxDateComponent } from './ngx-date.component';
-
-
+import { DatepickerModule } from './datepicker/datepicker.module';
 
 @NgModule({
-  declarations: [NgxDateComponent],
   imports: [
+    DatepickerModule
   ],
-  exports: [NgxDateComponent]
+  exports: [
+    DatepickerModule
+  ]
 })
 export class NgxDateModule { }

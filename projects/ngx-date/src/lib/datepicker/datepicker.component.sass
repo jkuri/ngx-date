@@ -1,0 +1,129 @@
+$text-primary: #010001
+$text-secondary: #AAA8AB
+$text-disabled: #BBBABE
+$white: #ffffff
+$color: #2E9BD2
+$border: #EAEDF3
+$box-shadow: 0 4px 12px rgba(0, 0, 0, .3)
+$background-today: #EDEEF2
+
+=unselectable
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+.datepicker-container
+  position: relative
+
+  input
+    cursor: pointer
+
+  .datepicker-calendar-container
+    position: absolute
+    width: 350px
+    background: #fff
+    background: $white
+    border: 1px solid $border
+    border-radius: 4px
+    font-weight: 700
+    box-shadow: $box-shadow
+    top: 35px
+    left: 0
+
+    .top-container
+      +unselectable
+      padding: 20px
+      display: flex
+      justify-content: space-between
+      align-items: center
+
+      .month-year-container
+        height: 100%
+        display: flex
+        align-items: center
+
+        .month-year-text
+          font-size: 20px
+          font-weight: 900
+
+      .controls
+        width: 50px
+        height: 100%
+        display: flex
+        justify-content: space-between
+        align-items: center
+
+        .control
+          cursor: pointer
+
+          path
+            fill: $text-secondary
+
+          &:hover
+
+            path
+              fill: $text-primary
+
+    .main-calendar-container
+      width: 100%
+      height: 100%
+      font-size: 12px
+
+      .main-calendar-day-names
+        +unselectable
+        display: flex
+        align-items: center
+        border-bottom: 1px solid $border
+        height: 35px
+        padding: 0 10px
+
+        .day-name-unit
+          width: calc(100% / 7)
+          text-transform: uppercase
+          text-align: center
+          color: $text-secondary
+
+      .main-calendar-days
+        +unselectable
+        padding: 10px
+        width: 100%
+        overflow: hidden
+
+        .day-unit
+          width: calc(100% / 7)
+          display: inline-flex
+          align-items: center
+          justify-content: center
+          cursor: pointer
+          user-select: none
+          color: $text-primary
+          font-size: 13px
+          border-radius: 50%
+
+          &:before
+            content: ''
+            float: left
+            padding-top: calc(100% - 7px)
+
+          &.is-prev-month
+            color: $text-disabled
+
+          &:hover
+            background: $color
+            color: $white
+
+          &.is-today
+            background: $background-today
+
+          &.is-selected
+            background: $color
+            color: $white
+
+          &.is-disabled
+            cursor: not-allowed
+            color: $text-secondary
+
+            &:hover
+              background: transparent

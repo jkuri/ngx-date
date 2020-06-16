@@ -17,8 +17,7 @@
     ],
     "paths": {
       "ngx-date": [
-        "dist/ngx-date/ngx-date",
-        "dist/ngx-date"
+        "projects/ngx-date/src/public-api"
       ]
     }
   },

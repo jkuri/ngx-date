@@ -1,9 +1,10 @@
 <div class="datepicker-container">
-  <input type="text" [(ngModel)]="displayValue" [class]="options.class" readonly (click)="toggle()">
+  <input type="text" [(ngModel)]="displayValue" [class]="options.class" [placeholder]="options.placeholder" readonly
+    (click)="toggle()">
 
   <div class="datepicker-calendar-container" *ngIf="isOpened">
     <div class="top-container">
-      <div class="month-year-container">
+      <div class="month-year-container" (click)="toggleView()">
         <span class="month-year-text">{{ title }}</span>
       </div>
       <div class="controls">
@@ -17,7 +18,7 @@
         </svg>
       </div>
     </div>
-    <div class="main-calendar-container">
+    <div class="main-calendar-container" *ngIf="view === 'days'">
       <div class="main-calendar-day-names">
         <span class="day-name-unit" *ngFor="let day of dayNames">{{ day }}</span>
       </div>
@@ -28,6 +29,12 @@
             'is-selected': day.isSelected,
             'is-disabled': !day.isSelectable
           }" (click)="day.isSelectable && setDate(i)">{{ day.day }}</span>
+      </div>
+    </div>
+    <div class="main-calendar-container" *ngIf="view === 'years'">
+      <div class="main-calendar-years" slimScroll [options]="scrollOptions">
+        <span class="year-unit" *ngFor="let year of years; let i = index;"
+          [ngClass]="{ 'is-selected': year.isThisYear }" (click)="setYear(i)">{{ year.year }}</span>
       </div>
     </div>
   </div>

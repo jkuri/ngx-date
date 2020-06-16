@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, HostListener, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { ISlimScrollOptions } from 'ngx-slimscroll';
 import { DatepickerOptions, mergeOptions } from './datepicker-options.interface';
 import {
   eachDayOfInterval,
@@ -44,11 +45,12 @@ interface Day {
 })
 export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChanges {
   @Input() options: DatepickerOptions;
+  @Input() scrollOptions: ISlimScrollOptions;
   @Input() isOpened = false;
 
   innerValue: Date;
   displayValue: string;
-  view: 'days' | 'months' | 'years';
+  view: 'days' | 'years';
   date: Date;
   years: { year: number; isThisYear: boolean }[] = [];
   days: Day[] = [];
@@ -60,10 +62,22 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
 
   set value(val: Date) {
     this.innerValue = val;
+    this.displayValue = format(this.innerValue, this.options.format, { locale: this.options.locale });
     this.onChangeCallback(this.innerValue);
   }
 
-  constructor(public elementRef: ElementRef) { }
+  constructor(public elementRef: ElementRef) {
+    this.scrollOptions = {
+      barBackground: '#DFE3E9',
+      gridBackground: '#FFFFFF',
+      barBorderRadius: '3',
+      gridBorderRadius: '3',
+      barWidth: '6',
+      gridWidth: '6',
+      barMargin: '0',
+      gridMargin: '0'
+    };
+  }
 
   get title(): string {
     return format(this.date, this.options.formatTitle);
@@ -85,6 +99,10 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
 
   toggle(): void {
     this.isOpened = !this.isOpened;
+  }
+
+  toggleView(): void {
+    this.view = this.view === 'days' ? 'years' : 'days';
   }
 
   nextMonth(): void {
@@ -126,7 +144,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   }
 
   private initYears(): void {
-    const range = this.options.maxYear - this.options.minYear;
+    const range = this.options.maxYear - this.options.minYear + 1;
     this.years = Array.from(new Array(range), (_, i) => i + this.options.minYear).map(year => {
       return { year, isThisYear: year === getYear(this.date) };
     });
@@ -171,6 +189,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
       return;
     }
     this.innerValue = val;
+    this.displayValue = format(this.innerValue, this.options.format, { locale: this.options.locale });
   }
 
   registerOnChange(fn: any): void {
@@ -190,8 +209,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
     }
 
     const input = this.elementRef.nativeElement.querySelector('.datepicker-container > input');
-
-    if (input == null) {
+    if (!input) {
       return;
     }
 
@@ -200,7 +218,9 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
     }
 
     const container = this.elementRef.nativeElement.querySelector('.datepicker-calendar-container');
-    if (container && container !== e.target && !container.contains(e.target)) {
+    if (container && container !== e.target &&
+      !container.contains(e.target) &&
+      !(e.target as HTMLElement).classList.contains('year-unit')) {
       this.isOpened = false;
     }
   }

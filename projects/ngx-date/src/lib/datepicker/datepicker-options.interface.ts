@@ -7,6 +7,7 @@ export interface DatepickerOptions {
   maxDate?: Date;
   minYear?: number;
   maxYear?: number;
+  placeholder?: string;
   format?: string;
   formatTitle?: string;
   formatDays?: string;
@@ -25,10 +26,12 @@ export function mergeOptions(opts: DatepickerOptions): DatepickerOptions {
 const defaultOptions: DatepickerOptions = {
   minYear: getYear(new Date()) - 30,
   maxYear: getYear(new Date()) + 30,
-  format: 'MMM D[,] YYYY',
+  placeholder: '',
+  format: 'LLLL do yyyy',
   formatTitle: 'LLLL yyyy',
   formatDays: 'EEEEE',
   firstCalendarDay: 0,
   locale: enUS,
-  position: 'bottom'
+  position: 'bottom',
+  class: ''
 };

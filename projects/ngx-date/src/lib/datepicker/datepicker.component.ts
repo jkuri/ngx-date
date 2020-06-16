@@ -87,9 +87,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   ngOnInit(): void {
     this.view = 'days';
     this.date = new Date();
-    this.initDayNames();
     this.initDays();
-    this.initYears();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -137,8 +135,14 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
     const parent = this.elementRef.nativeElement.querySelector('.main-calendar-years');
     const el = this.elementRef.nativeElement.querySelector('.year-unit.is-selected');
     const y = el.offsetTop - (parent.clientHeight / 2) + (el.clientHeight / 2);
-    const event = new SlimScrollEvent({ type: 'scrollTo', y, duration: 200 });
+    const event = new SlimScrollEvent({ type: 'scrollTo', y, duration: 100 });
     this.scrollEvents.emit(event);
+  }
+
+  private init(): void {
+    this.initDayNames();
+    this.initDays();
+    this.initYears();
   }
 
   private initDays(): void {
@@ -202,6 +206,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
     }
     this.innerValue = val;
     this.displayValue = format(this.innerValue, this.options.format, { locale: this.options.locale });
+    this.init();
   }
 
   registerOnChange(fn: any): void {

@@ -95,7 +95,9 @@ $background-today: #EDEEF2
         overflow: hidden
         text-align: left
         display: inline-block
-        max-height: 275px
+
+        &.is-hidden
+          display: none
 
         .day-unit, .year-unit
           width: calc(100% / 7)
@@ -116,12 +118,12 @@ $background-today: #EDEEF2
           &.is-prev-month
             color: $text-disabled
 
+          &.is-today
+            background: $background-today
+
           &:hover, &.is-selected
             background: $text-primary
             color: $white
-
-          &.is-today
-            background: $background-today
 
           &.is-disabled
             cursor: not-allowed
@@ -133,10 +135,14 @@ $background-today: #EDEEF2
       .main-calendar-years
         display: block
         padding: 10px
+        height: 275px
 
         .year-unit
           width: calc(100% / 4)
-          border-radius: 10px
+          height: 35px
+          border-radius: 20px
+          margin: 8px 0
 
           &:before
-            padding-top: 50%
+            padding-top: 0
+

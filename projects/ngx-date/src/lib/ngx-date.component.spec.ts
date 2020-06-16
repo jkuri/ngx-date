@@ -8,9 +8,9 @@ describe('NgxDateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NgxDateComponent ]
+      declarations: [NgxDateComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, HostListener, ElementRef, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { ISlimScrollOptions } from 'ngx-slimscroll';
+import { ISlimScrollOptions, SlimScrollEvent } from 'ngx-slimscroll';
 import { DatepickerOptions, mergeOptions } from './datepicker-options.interface';
 import {
   eachDayOfInterval,
@@ -55,6 +55,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   years: { year: number; isThisYear: boolean }[] = [];
   days: Day[] = [];
   dayNames: string[] = [];
+  scrollEvents = new EventEmitter<SlimScrollEvent>();
 
   get value(): Date {
     return this.innerValue;
@@ -103,6 +104,9 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
 
   toggleView(): void {
     this.view = this.view === 'days' ? 'years' : 'days';
+    if (this.view === 'years') {
+      setTimeout(() => this.scrollToYear());
+    }
   }
 
   nextMonth(): void {
@@ -127,6 +131,14 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
     this.initDays();
     this.initYears();
     this.view = 'days';
+  }
+
+  private scrollToYear(): void {
+    const parent = this.elementRef.nativeElement.querySelector('.main-calendar-years');
+    const el = this.elementRef.nativeElement.querySelector('.year-unit.is-selected');
+    const y = el.offsetTop - (parent.clientHeight / 2) + (el.clientHeight / 2);
+    const event = new SlimScrollEvent({ type: 'scrollTo', y, duration: 200 });
+    this.scrollEvents.emit(event);
   }
 
   private initDays(): void {

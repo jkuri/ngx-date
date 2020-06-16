@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "date-fns": "^2.14.0",
+    "ngx-slimscroll": "^9.2.0",
     "tslib": "^1.10.0"
   }
 }

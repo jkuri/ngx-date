@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="main-calendar-container" *ngIf="view === 'years'">
-      <div class="main-calendar-years" slimScroll [options]="scrollOptions">
+      <div class="main-calendar-years" slimScroll [options]="scrollOptions" [scrollEvents]="scrollEvents">
         <span class="year-unit" *ngFor="let year of years; let i = index;"
           [ngClass]="{ 'is-selected': year.isThisYear }" (click)="setYear(i)">{{ year.year }}</span>
       </div>

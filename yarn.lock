@@ -6031,10 +6031,10 @@ ng-packagr@^9.0.0:
     terser "^4.3.8"
     update-notifier "^4.0.0"
 
-ngx-slimscroll@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/ngx-slimscroll/-/ngx-slimscroll-9.1.0.tgz#5314847c5a77b5c10a4bc51fc2a0ffea1380e000"
-  integrity sha512-wuj+tIz9804ZpKUhv9OB5kfPPjnWBlxRBY8pkphF0V3mSyglrXtjKuP/EoiaNKT7ygUXP+3kGVPraeN5MRRHpQ==
+ngx-slimscroll@^9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/ngx-slimscroll/-/ngx-slimscroll-9.2.0.tgz#6c5ea49baa4fa298540ccbcd88c0ef0c0f763df8"
+  integrity sha512-14sP5iCDLGiDyvcBPmK97dsCc06b8OKQtkKJ6vUyVQ9xkKR01mJtWyC1ZFMHG/qzLc6pJlR5nYA8LMYY/J4Dgg==
   dependencies:
     tslib "^1.10.0"
 

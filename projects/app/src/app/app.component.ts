@@ -24,4 +24,11 @@ export class AppComponent {
     calendarClass: 'datepicker-dark',
     scrollBarColor: '#ffffff'
   };
+  code = `
+  options: DatepickerOptions = {
+    inputClass: 'input',
+    calendarClass: 'datepicker-dark',
+    scrollBarColor: '#ffffff'
+  };
+  `;
 }

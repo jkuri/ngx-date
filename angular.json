@@ -27,9 +27,7 @@
               "projects/app/src/favicon.ico",
               "projects/app/src/assets"
             ],
-            "styles": [
-              "projects/app/src/app/styles/app.sass"
-            ],
+            "styles": ["projects/app/src/styles/app.sass"],
             "scripts": []
           },
           "configurations": {
@@ -91,9 +89,7 @@
               "projects/app/src/favicon.ico",
               "projects/app/src/assets"
             ],
-            "styles": [
-              "projects/app/src/app/styles/app.sass"
-            ],
+            "styles": ["projects/app/src/styles/app.sass"],
             "scripts": []
           }
         },
@@ -105,9 +101,7 @@
               "projects/app/tsconfig.spec.json",
               "projects/app/e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -157,9 +151,7 @@
               "projects/ngx-date/tsconfig.lib.json",
               "projects/ngx-date/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }

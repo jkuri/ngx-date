@@ -68,16 +68,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   }
 
   constructor(public elementRef: ElementRef) {
-    this.scrollOptions = {
-      barBackground: '#DFE3E9',
-      gridBackground: '#FFFFFF',
-      barBorderRadius: '3',
-      gridBorderRadius: '3',
-      barWidth: '6',
-      gridWidth: '6',
-      barMargin: '0',
-      gridMargin: '0'
-    };
+    this.styleScrollbar();
   }
 
   get title(): string {
@@ -93,6 +84,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   ngOnChanges(changes: SimpleChanges): void {
     if ('options' in changes) {
       this.options = mergeOptions(this.options);
+      this.styleScrollbar();
     }
   }
 
@@ -200,6 +192,19 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
     return true;
   }
 
+  private styleScrollbar(): void {
+    this.scrollOptions = {
+      barBackground: this.options && this.options.scrollBarColor || '#dfe3e9',
+      gridBackground: 'transparent',
+      barBorderRadius: '3',
+      gridBorderRadius: '3',
+      barWidth: '6',
+      gridWidth: '6',
+      barMargin: '0',
+      gridMargin: '0'
+    };
+  }
+
   writeValue(val: Date): void {
     if (!val) {
       return;
@@ -234,7 +239,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
       return;
     }
 
-    const container = this.elementRef.nativeElement.querySelector('.datepicker-calendar-container');
+    const container = this.elementRef.nativeElement.querySelector('.datepicker-container > .calendar-container');
     if (container && container !== e.target &&
       !container.contains(e.target) &&
       !(e.target as HTMLElement).classList.contains('year-unit')) {

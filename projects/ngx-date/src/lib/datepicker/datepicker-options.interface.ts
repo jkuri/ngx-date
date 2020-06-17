@@ -14,7 +14,9 @@ export interface DatepickerOptions {
   firstCalendarDay?: number;
   locale?: Locale;
   position?: 'left' | 'right' | 'bottom' | 'top';
-  class?: string;
+  inputClass?: string;
+  calendarClass?: string;
+  scrollBarColor?: string;
 }
 
 export const DATEPICKER_OPTIONS = new InjectionToken<DatepickerOptions>('Datepicker config');
@@ -33,5 +35,7 @@ const defaultOptions: DatepickerOptions = {
   firstCalendarDay: 0,
   locale: enUS,
   position: 'bottom',
-  class: ''
+  inputClass: '',
+  calendarClass: 'datepicker-default',
+  scrollBarColor: '#dfe3e9'
 };

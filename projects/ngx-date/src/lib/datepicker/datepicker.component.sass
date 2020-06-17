@@ -19,6 +19,7 @@ $background-today: #EDEEF2
   display: inline-block
 
   input
+    +unselectable
     cursor: pointer
 
   .is-hidden
@@ -27,12 +28,7 @@ $background-today: #EDEEF2
   .calendar-container
     position: absolute
     width: 320px
-    background: #fff
-    background: $white
-    border: 1px solid $border
     border-radius: 4px
-    font-weight: 700
-    box-shadow: $box-shadow
     top: 35px
     left: 0
 
@@ -51,11 +47,7 @@ $background-today: #EDEEF2
 
         .month-year-text
           font-size: 16px
-          font-weight: 700
           width: 200px
-
-        .icon-down
-          margin-left: 10px
 
       .controls
         height: 100%
@@ -65,14 +57,6 @@ $background-today: #EDEEF2
 
         .control
           cursor: pointer
-
-          path
-            fill: $text-secondary
-
-          &:hover
-
-            path
-              fill: $text-primary
 
     .main-calendar-container
       width: 100%
@@ -84,7 +68,6 @@ $background-today: #EDEEF2
         +unselectable
         display: flex
         align-items: center
-        border-bottom: 1px solid $border
         height: 35px
         padding: 0 10px
 
@@ -92,7 +75,6 @@ $background-today: #EDEEF2
           width: calc(100% / 7)
           text-transform: uppercase
           text-align: center
-          color: $text-secondary
 
       .main-calendar-days, .main-calendar-years
         +unselectable
@@ -112,7 +94,6 @@ $background-today: #EDEEF2
           justify-content: center
           cursor: pointer
           user-select: none
-          color: $text-primary
           font-size: 13px
           border-radius: 50%
 
@@ -121,19 +102,8 @@ $background-today: #EDEEF2
             float: left
             padding-top: calc(100% - 7px)
 
-          &.is-prev-month
-            color: $text-disabled
-
-          &.is-today
-            background: $background-today
-
-          &:hover, &.is-selected
-            background: $text-primary
-            color: $white
-
           &.is-disabled
             cursor: not-allowed
-            color: $text-secondary
 
             &:hover
               background: transparent
@@ -152,3 +122,48 @@ $background-today: #EDEEF2
           &:before
             padding-top: 0
 
+
+.datepicker-default
+
+  .calendar-container
+    background: #ffffff
+    border: 1px solid #eaedf3
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .05)
+    top: 35px
+    left: 0
+    font-weight: 600
+
+  .month-year-text
+    color: #010001
+
+  .control
+    path
+      fill: #aaa8ab
+    &:hover
+      path
+        fill: #010001
+
+  .main-calendar-day-names
+    border-bottom: 1px solid #eaedf3
+
+  .day-name-unit
+    color: #aaa8ab
+
+  .day-unit, .year-unit
+    color: #010001
+
+    &.is-prev-month
+      color: #bbbabe
+
+    &.is-today
+      background: #edeef2
+
+    &:hover, &.is-selected
+      background: #010001
+      color: #ffffff
+
+    &.is-disabled
+      color: #aaa8ab
+
+      &:hover
+        background: transparent

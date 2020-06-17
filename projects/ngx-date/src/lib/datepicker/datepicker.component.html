@@ -1,6 +1,6 @@
-<div class="datepicker-container">
-  <input type="text" [(ngModel)]="displayValue" [class]="options.class" [placeholder]="options.placeholder" readonly
-    (click)="toggle()">
+<div class="datepicker-container" [class]="options.calendarClass">
+  <input type="text" [(ngModel)]="displayValue" [class]="options.inputClass" [placeholder]="options.placeholder"
+    readonly (click)="toggle()">
 
   <div class="calendar-container" *ngIf="isOpened">
     <div class="top-container">

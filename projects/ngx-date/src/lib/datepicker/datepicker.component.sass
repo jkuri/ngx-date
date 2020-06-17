@@ -21,9 +21,12 @@ $background-today: #EDEEF2
   input
     cursor: pointer
 
-  .datepicker-calendar-container
+  .is-hidden
+    display: none !important
+
+  .calendar-container
     position: absolute
-    width: 350px
+    width: 320px
     background: #fff
     background: $white
     border: 1px solid $border
@@ -47,11 +50,14 @@ $background-today: #EDEEF2
         cursor: pointer
 
         .month-year-text
-          font-size: 18px
+          font-size: 16px
           font-weight: 700
+          width: 200px
+
+        .icon-down
+          margin-left: 10px
 
       .controls
-        width: 50px
         height: 100%
         display: flex
         justify-content: space-between

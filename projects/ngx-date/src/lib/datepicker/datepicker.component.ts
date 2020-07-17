@@ -1,7 +1,16 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, HostListener, ElementRef, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  HostListener,
+  ElementRef,
+  EventEmitter
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { ISlimScrollOptions, SlimScrollEvent } from 'ngx-slimscroll';
-import { DatepickerOptions, mergeOptions } from './datepicker-options.interface';
+import { DatepickerOptions, mergeDatepickerOptions } from './datepicker-options.interface';
 import {
   eachDayOfInterval,
   startOfMonth,
@@ -39,9 +48,7 @@ interface Day {
   selector: 'ngx-datepicker',
   templateUrl: './datepicker.component.html',
   styleUrls: ['./datepicker.component.sass'],
-  providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: DatepickerComponent, multi: true }
-  ]
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: DatepickerComponent, multi: true }]
 })
 export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChanges {
   @Input() options: DatepickerOptions;
@@ -83,7 +90,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('options' in changes) {
-      this.options = mergeOptions(this.options);
+      this.options = mergeDatepickerOptions(this.options);
       this.styleScrollbar();
     }
   }
@@ -126,7 +133,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
   private scrollToYear(): void {
     const parent = this.elementRef.nativeElement.querySelector('.main-calendar-years');
     const el = this.elementRef.nativeElement.querySelector('.year-unit.is-selected');
-    const y = el.offsetTop - (parent.clientHeight / 2) + (el.clientHeight / 2);
+    const y = el.offsetTop - parent.clientHeight / 2 + el.clientHeight / 2;
     const event = new SlimScrollEvent({ type: 'scrollTo', y, duration: 100 });
     this.scrollEvents.emit(event);
   }
@@ -175,7 +182,8 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
       year: getYear(date),
       inThisMonth,
       isToday: isToday(date),
-      isSelected: isSameDay(date, this.innerValue) && isSameMonth(date, this.innerValue) && isSameYear(date, this.innerValue),
+      isSelected:
+        isSameDay(date, this.innerValue) && isSameMonth(date, this.innerValue) && isSameYear(date, this.innerValue),
       isSelectable: this.isDateSelectable(date)
     };
   }
@@ -194,7 +202,7 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
 
   private styleScrollbar(): void {
     this.scrollOptions = {
-      barBackground: this.options && this.options.scrollBarColor || '#dfe3e9',
+      barBackground: (this.options && this.options.scrollBarColor) || '#dfe3e9',
       gridBackground: 'transparent',
       barBorderRadius: '3',
       gridBorderRadius: '3',
@@ -222,8 +230,8 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
     this.onTouchedCallback = fn;
   }
 
-  private onTouchedCallback: () => void = () => { };
-  private onChangeCallback: (_: any) => void = () => { };
+  private onTouchedCallback: () => void = () => {};
+  private onChangeCallback: (_: any) => void = () => {};
 
   @HostListener('document:click', ['$event']) onBlur(e: MouseEvent) {
     if (!this.isOpened) {
@@ -240,9 +248,12 @@ export class DatepickerComponent implements ControlValueAccessor, OnInit, OnChan
     }
 
     const container = this.elementRef.nativeElement.querySelector('.datepicker-container > .calendar-container');
-    if (container && container !== e.target &&
+    if (
+      container &&
+      container !== e.target &&
       !container.contains(e.target) &&
-      !(e.target as HTMLElement).classList.contains('year-unit')) {
+      !(e.target as HTMLElement).classList.contains('year-unit')
+    ) {
       this.isOpened = false;
     }
   }

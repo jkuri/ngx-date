@@ -1,8 +1,8 @@
 <div class="daterangepicker-container" [class]="options.calendarClass">
   <input type="text" [(ngModel)]="displayValue" [class]="options.inputClass" [placeholder]="options.placeholder"
-    readonly (click)="toggle()">
+    readonly (click)="toggleCalendar('from')">
 
-  <div class="calendar-container" *ngIf="isOpened">
+  <div class="calendar-container" *ngIf="opened">
     <div class="top-container">
       <div class="controls">
         <svg xmlns="http://www.w3.org/2000/svg" class="control" width="8" height="13" (click)="prevMonth()"
@@ -29,12 +29,15 @@
         <span class="day-name-unit" *ngFor="let day of dayNames">{{ day }}</span>
       </div>
       <div class="main-calendar-days">
-        <span class="day-unit" *ngFor="let day of days; let i = index;" [ngClass]="{
+        <div class="day-unit" *ngFor="let day of days; let i = index;" [ngClass]="{
+            'is-within-range': day.isWithinRange,
+            'is-from': day.from,
+            'is-to': day.to,
             'is-prev-month': !day.inThisMonth,
-            'is-today': day.isToday,
-            'is-selected': day.isSelected,
             'is-disabled': !day.isSelectable
-          }" (click)="day.isSelectable && setDate(i)">{{ day.day }}</span>
+          }" (click)="day.isSelectable && selectDate($event, i)">
+          <span class="day-num" [class.is-selected]="day.from || day.to">{{ day.day }}</span>
+        </div>
       </div>
     </div>
     <div class="main-calendar-container" *ngIf="view === 'years'">

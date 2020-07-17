@@ -30,7 +30,10 @@ import {
   format,
   addMonths,
   subMonths,
-  setYear
+  setYear,
+  startOfDay,
+  isWithinInterval,
+  addDays
 } from 'date-fns';
 
 interface Day {
@@ -42,6 +45,9 @@ interface Day {
   isToday: boolean;
   isSelected: boolean;
   isSelectable: boolean;
+  from: boolean;
+  to: boolean;
+  isWithinRange: boolean;
 }
 
 @Component({
@@ -53,24 +59,26 @@ interface Day {
 export class DateRangePickerComponent implements ControlValueAccessor, OnInit, OnChanges {
   @Input() options: DateRangePickerOptions;
   @Input() scrollOptions: ISlimScrollOptions;
-  @Input() isOpened = false;
+  @Input() opened: false | 'from' | 'to' = false;
 
-  innerValue: Date;
+  innerValue: string;
   displayValue: string;
   view: 'days' | 'years';
   date: Date;
+  dateFrom: Date;
+  dateTo: Date;
   years: { year: number; isThisYear: boolean }[] = [];
   days: Day[] = [];
   dayNames: string[] = [];
   scrollEvents = new EventEmitter<SlimScrollEvent>();
 
-  get value(): Date {
+  get value(): string {
     return this.innerValue;
   }
 
-  set value(val: Date) {
+  set value(val: string) {
     this.innerValue = val;
-    this.displayValue = format(this.innerValue, this.options.format, { locale: this.options.locale });
+    this.displayValue = this.value;
     this.onChangeCallback(this.innerValue);
   }
 
@@ -84,19 +92,28 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnInit, O
 
   ngOnInit(): void {
     this.view = 'days';
-    this.date = new Date();
-    this.initDays();
+    this.date = startOfDay(new Date());
+    this.init();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('options' in changes) {
       this.options = mergeDateRangePickerOptions(this.options);
       this.styleScrollbar();
+      this.init();
     }
   }
 
-  toggle(): void {
-    this.isOpened = !this.isOpened;
+  toggleCalendar(selection: 'from' | 'to'): void {
+    if (this.opened && this.opened !== selection) {
+      this.opened = selection;
+    } else {
+      this.opened = this.opened ? false : selection;
+    }
+  }
+
+  closeCalendar(): void {
+    this.opened = false;
   }
 
   toggleView(): void {
@@ -116,11 +133,28 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnInit, O
     this.initDays();
   }
 
-  setDate(i: number): void {
-    this.date = this.days[i].date;
-    this.value = this.date;
+  selectDate(e: MouseEvent, index: number): void {
+    e.preventDefault();
+    this.date = this.days[index].date;
+    if (
+      (this.opened === 'from' && isAfter(this.date, this.dateTo)) ||
+      (this.opened === 'to' && isBefore(this.date, this.dateFrom))
+    ) {
+      return;
+    }
+
+    if (this.opened === 'from') {
+      this.dateFrom = this.date;
+      this.opened = 'to';
+    } else if (this.opened === 'to') {
+      this.dateTo = this.date;
+      this.opened = 'from';
+    }
+
     this.initDays();
-    this.isOpened = false;
+    const from = format(this.dateFrom, this.options.format, { locale: this.options.locale });
+    const to = format(this.dateTo, this.options.format, { locale: this.options.locale });
+    this.value = `${from}-${to}`;
   }
 
   setYear(i: number): void {
@@ -139,6 +173,8 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnInit, O
   }
 
   private init(): void {
+    this.dateFrom = this.dateFrom || new Date();
+    this.dateTo = this.dateTo || addDays(new Date(), 7);
     this.initDayNames();
     this.initDays();
     this.initYears();
@@ -182,9 +218,11 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnInit, O
       year: getYear(date),
       inThisMonth,
       isToday: isToday(date),
-      isSelected:
-        isSameDay(date, this.innerValue) && isSameMonth(date, this.innerValue) && isSameYear(date, this.innerValue),
-      isSelectable: this.isDateSelectable(date)
+      isSelected: isSameDay(date, this.date) && isSameMonth(date, this.date) && isSameYear(date, this.date),
+      isSelectable: this.isDateSelectable(date),
+      from: isSameDay(this.dateFrom, date),
+      to: isSameDay(this.dateTo, date),
+      isWithinRange: isWithinInterval(date, { start: this.dateFrom, end: this.dateTo })
     };
   }
 
@@ -213,12 +251,12 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnInit, O
     };
   }
 
-  writeValue(val: Date): void {
+  writeValue(val: string): void {
     if (!val) {
       return;
     }
     this.innerValue = val;
-    this.displayValue = format(this.innerValue, this.options.format, { locale: this.options.locale });
+    this.displayValue = val;
     this.init();
   }
 
@@ -234,27 +272,12 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnInit, O
   private onChangeCallback: (_: any) => void = () => {};
 
   @HostListener('document:click', ['$event']) onBlur(e: MouseEvent) {
-    if (!this.isOpened) {
+    if (!this.opened) {
       return;
     }
 
-    const input = this.elementRef.nativeElement.querySelector('.daterangepicker-container > input');
-    if (!input) {
-      return;
-    }
-
-    if (e.target === input || input.contains(e.target)) {
-      return;
-    }
-
-    const container = this.elementRef.nativeElement.querySelector('.daterangepicker-container > .calendar-container');
-    if (
-      container &&
-      container !== e.target &&
-      !container.contains(e.target) &&
-      !(e.target as HTMLElement).classList.contains('year-unit')
-    ) {
-      this.isOpened = false;
+    if (!this.elementRef.nativeElement.contains(e.target) && !(e.target as HTMLElement).classList.contains('day-num')) {
+      this.closeCalendar();
     }
   }
 }

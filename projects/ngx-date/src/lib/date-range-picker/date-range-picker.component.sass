@@ -100,18 +100,54 @@ $background-today: #EDEEF2
           cursor: pointer
           user-select: none
           font-size: 13px
-          border-radius: 50%
-
-          &:before
-            content: ''
-            float: left
-            padding-top: calc(100% - 5px)
 
           &.is-disabled
             cursor: not-allowed
 
             &:hover
               background: transparent
+
+        .year-unit
+          border-radius: 50%
+
+          &:before
+            content: ''
+            float: left
+            padding-top: calc(100%)
+
+          &:hover, &.is-selected
+            background: $color
+            color: $white
+
+        .day-unit
+          margin-bottom: 10px
+
+          &.is-within-range
+            background: rgba($color, .2)
+            color: $color
+
+          &.is-from
+            border-top-left-radius: 50%
+            border-bottom-left-radius: 50%
+
+          &.is-to
+            border-top-right-radius: 50%
+            border-bottom-right-radius: 50%
+
+          .day-num
+            display: flex
+            justify-content: center
+            align-items: center
+            float: left
+            width: 100%
+            height: 100%
+            border-radius: 50%
+            padding: 10px 15px
+
+            &:hover, &.is-selected
+              border-radius: 50%
+              background: $color
+              color: $white
 
       .main-calendar-years
         display: block
@@ -162,10 +198,6 @@ $background-today: #EDEEF2
 
     &.is-today
       background: #edeef2
-
-    &:hover, &.is-selected
-      background: #010001
-      color: #ffffff
 
     &.is-disabled
       color: #aaa8ab

@@ -29,7 +29,7 @@ const defaultOptions: DateRangePickerOptions = {
   minYear: getYear(new Date()) - 30,
   maxYear: getYear(new Date()) + 30,
   placeholder: '',
-  format: 'LLLL do yyyy',
+  format: 'yyyy/dd/LL',
   formatTitle: 'LLLL yyyy',
   formatDays: 'EEEEE',
   firstCalendarDay: 0,

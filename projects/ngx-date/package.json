@@ -2,13 +2,13 @@
   "name": "ngx-date",
   "version": "0.0.0",
   "peerDependencies": {
-    "@angular/common": "^9.1.11",
-    "@angular/core": "^9.1.11",
-    "@angular/forms": "~9.1.3"
+    "@angular/common": "~10.0.4",
+    "@angular/core": "~10.0.4",
+    "@angular/forms": "~10.0.4"
   },
   "dependencies": {
     "date-fns": "^2.14.0",
-    "ngx-slimscroll": "^9.2.2",
-    "tslib": "^1.10.0"
+    "ngx-slimscroll": "~10.0.0",
+    "tslib": "^2.0.0"
   }
 }

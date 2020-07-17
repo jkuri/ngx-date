@@ -11,7 +11,7 @@ import { DatepickerComponent } from './datepicker.component';
   exports: [DatepickerComponent]
 })
 export class DatepickerModule {
-  static forRoot(options: DatepickerOptions): ModuleWithProviders {
+  static forRoot(options: DatepickerOptions): ModuleWithProviders<DatepickerModule> {
     return {
       ngModule: DatepickerModule,
       providers: [{ provide: DATEPICKER_OPTIONS, useValue: mergeOptions(options) }]

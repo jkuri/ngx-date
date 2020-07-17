@@ -35,12 +35,14 @@ $background-today: #EDEEF2
 
     .top-container
       +unselectable
+      width: 100%
       padding: 20px
       display: flex
       justify-content: space-between
       align-items: center
 
       .month-year-container
+        width: 100%
         height: 100%
         display: flex
         align-items: center
@@ -48,7 +50,9 @@ $background-today: #EDEEF2
 
         .month-year-text
           font-size: 16px
-          width: 200px
+          width: 100%
+          display: inline-flex
+          justify-content: center
 
       .controls
         height: 100%

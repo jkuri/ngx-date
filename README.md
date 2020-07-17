@@ -1,6 +1,6 @@
 # ngx-date
 
-Angular Date related widgets and components.
+Collection of Angular date and time related widgets or components.
 
 ## Datepicker
 

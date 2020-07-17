@@ -2,7 +2,7 @@ import { getYear, Locale } from 'date-fns';
 import { InjectionToken } from '@angular/core';
 import { enUS } from 'date-fns/locale';
 
-export interface DatepickerOptions {
+export interface DateRangePickerOptions {
   minDate?: Date;
   maxDate?: Date;
   minYear?: number;
@@ -19,13 +19,13 @@ export interface DatepickerOptions {
   scrollBarColor?: string;
 }
 
-export const DATEPICKER_OPTIONS = new InjectionToken<DatepickerOptions>('Datepicker config');
+export const DATERANGEPICKER_OPTIONS = new InjectionToken<DateRangePickerOptions>('DateRangePicker Config');
 
-export function mergeDatepickerOptions(opts: DatepickerOptions): DatepickerOptions {
+export function mergeDateRangePickerOptions(opts: DateRangePickerOptions): DateRangePickerOptions {
   return { ...defaultOptions, ...opts };
 }
 
-const defaultOptions: DatepickerOptions = {
+const defaultOptions: DateRangePickerOptions = {
   minYear: getYear(new Date()) - 30,
   maxYear: getYear(new Date()) + 30,
   placeholder: '',

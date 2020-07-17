@@ -5,11 +5,9 @@
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
       "date-fns": "dateFns",
+      "date-fns/locale": "dateFnsLocale",
       "ngx-slimscroll": "slimscroll"
     }
   },
-  "whitelistedNonPeerDependencies": [
-    "date-fns",
-    "ngx-slimscroll"
-  ]
+  "whitelistedNonPeerDependencies": ["date-fns", "ngx-slimscroll"]
 }
